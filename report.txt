@@ -1,0 +1,57 @@
+This program is meant to allow a user to play Conway's Game of Life either
+interactivelly or through a continuous viewing of pre-set scenes of textfiles
+held within the Life directory.
+The user can enter interactive mode by simply entering the executable 'playlife'
+which will open a menu of decisions to do on the Life board including:
+adding a new cell, removing a live cell, seeing the next stage of the board,
+quitting the game, or playing the game continuously through a continuous view.
+When adding or removing cells, the user will be promted to enter the number of cells
+they would like to add or remove. They will then enter the coordinates of the board
+where they would like to put these choices into action.
+In the batch/ automatic mode the scenes are as follows: scene1- still life, scene2- 
+oscillators, scene3- 4 gliders, scene4- explosion, and scene5- was meant to be an
+arrow firing into a target and it eventually oscillates at least once to mimic its
+desired action.
+
+Programatically, this class Life includes a header file: lifeboard.h,
+an implementation: lifeboard.cpp, and a main file: life.cpp. Beginning with the header,
+I included the usual constructors (made a blank board) and destructors along with 
+get and set functions for the coordinates and the char action (for batch mode).
+I included these get and set functions to allow input and output stream overloads
+so that the user could insert two coordinates at a time for add and remove.
+The printBoard() method was used to print the boardOne/ current board whenever needed.
+The add(), remove(), next(), and quit() methods are all used in the interactive mode.
+play() was not created as a separate method because if 'p' was chosen in interactive
+mode, then the next function would be called back eternally by an infinite while loop.
+The autoAdd(ifstream&) and next() methods are used in the batch/ automatic mode.
+Private members included the coordinates, boardOne, and boardTwo, thus they can
+never be accessed from the main file (life.cpp). Most of the programming and editing
+to the boards happens within the methods of lifeboard.cpp.
+In the main file, argc and *argv[] are used to determine the number of strings
+inserted by a user at the executing of this program. argc counts the number of strings
+and argv[] takes in the textfile which is then opened by ifs.open() if argc is equal
+to two, meaning a textfile name was entered after the executable playlife. If argc was
+equal to 1, then only one string "playlife" was entered and thus the user automatically
+gets placed into interactive mode.
+Within lifeboard.cpp, the methods contain many of the programming that changes the
+board's state. printBoard() uses nested for loops to activate print out the board.
+The outer loops and outer states work on the border, while a 2D array of bools:
+boardOne[40][40] is set in the middle to designate the board. A true state prints
+an X while a false state prints a blank space. Thus add() and remove() simply
+change certain coordinates to their respective states. The next() method includes 
+one time printing of the boardOne. To do this, a temporary board, boardTwo is set up
+to initially be exactly the same as boardOne. All the places of the 2D array are
+checked and so are their neighbors through separate internal for loops that loop
+one space around that area and add to the alive count if true states are found.
+My program allows the live cells to continue through and around the boarders as if
+it were in a globe by adding by 39 and moding the addition to always place X somewhere
+within the board. The only reason autoAdd() was created was due to the fact that
+cin could not be used because the chosen textfile has to be read in through ifs.
+This ifs then read in the numbers to set the coordinates as true, if originally
+the char 'action' was 'a'. The char 'p' sets the next() method infinitely.
+
+I know this program works by running through each stage carefully. The only problem
+that arised was that my scene5.txt was sub-par to what I expected :( , I also did
+the looping around the board on purpose. Please check my comments to see why. Ryan
+said I should be fine because I did this transiton border on purpose. My scenes
+(except 5) were sourced from Wikipedia and scene 3 was from Pintrest (Google Images).
